@@ -38,13 +38,6 @@ PayMind AI is an intelligent system that predicts payment success probability an
 
 - **Python ML Stack** → for prediction modeling  
 - **Rule-based AI reasoning** → for intelligent decision explanation  
-
----
-
-## 📸 Demo
-
-![App Screenshot](screenshot.png)
-
 ---
 
 ## ▶️ How to Run
