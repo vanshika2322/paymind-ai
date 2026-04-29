@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PayMind AI</title>
+
+    <style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #eef2f3, #8e9eab);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        margin: 0;
+        font-size: 32px;
+        color: #2c3e50;
+    }
+
+    .header p {
+        color: gray;
+        margin-top: 5px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        width: 420px;
+        border-radius: 12px;
+        box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 600;
+        margin-top: 10px;
+        display: block;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        margin-top: 15px;
+        width: 100%;
+        background: #6366f1;
+        color: white;
+        padding: 12px;
+        border-radius: 6px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #4f46e5;
+    }
+
+    .result-box h2 {
+        margin-top: 0;
+    }
+
+    .low {
+        color: blueviolet;
+        font-weight: bold;
+    }
+
+    .high {
+        color: mintcream;
+        font-weight: bold;
+    }
+
+    canvas {
+        margin-top: 20px;
+    }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>PayMind AI</h1>
+    <p>Smart Payment Decision Engine</p>
+</div>
+
+<div class="card">
+    <form method="POST">
+
+        <label>Amount</label>
+        <input type="number" name="amount" required>
+
+        <label>Payment Method</label>
+        <select name="payment_method">
+            <option>UPI</option>
+            <option>Card</option>
+            <option>NetBanking</option>
+            <option>Wallet</option>
+        </select>
+
+        <label>Bank Status</label>
+        <select name="bank_status">
+            <option>Good</option>
+            <option>Slow</option>
+            <option>Down</option>
+        </select>
+
+        <label>Network Quality</label>
+        <select name="network_quality">
+            <option>Strong</option>
+            <option>Medium</option>
+            <option>Weak</option>
+        </select>
+
+        <label>Hour</label>
+        <input type="number" name="hour" min="0" max="23" required>
+
+        <label>Previous Failures</label>
+        <input type="number" name="previous_failures" required>
+
+        <button type="submit">Predict Payment Decision</button>
+
+    </form>
+</div>
+
+{% if result %}
+<div class="card result-box">
+    <h2>Result</h2>
+
+    <p><b>Prediction:</b> {{ result.prediction }}</p>
+
+    <p><b>Success Probability:</b> {{ result.success_probability }}%</p>
+
+    <p><b>Risk Level:</b> 
+        <span class="{{ 'low' if result.risk == 'Low' else 'high' }}">
+            {{ result.risk }}
+        </span>
+    </p>
+
+    <p><b>Recommended Method:</b> {{ result.retry_method }}</p>
+
+    <p><b>AI Insight:</b> {{ result.explanation }}</p>
+
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const data = {
+    labels: ["Success", "Failure"],
+    datasets: [{
+        data: [{{ result.success_probability }}, {{ 100 - result.success_probability }}],
+        backgroundColor: ["#4CAF50", "#F44336"]
+    }]
+};
+
+new Chart(document.getElementById('myChart'), {
+    type: 'pie',
+    data: data
+});
+</script>
+{% endif %}
+
+</body>
+</html>

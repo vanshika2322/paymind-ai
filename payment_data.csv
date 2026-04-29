@@ -1,0 +1,11 @@
+amount,payment_method,bank_status,network_quality,hour,previous_failures,success
+500,UPI,Good,Strong,10,0,1
+12000,Card,Slow,Weak,22,2,0
+800,NetBanking,Good,Medium,14,0,1
+25000,Card,Down,Weak,23,3,0
+1500,UPI,Good,Strong,11,0,1
+7000,Wallet,Slow,Medium,19,1,0
+300,UPI,Good,Strong,9,0,1
+18000,NetBanking,Down,Weak,21,2,0
+4500,Card,Good,Medium,13,0,1
+10000,UPI,Slow,Weak,20,1,0
